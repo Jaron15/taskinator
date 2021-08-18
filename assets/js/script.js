@@ -188,7 +188,6 @@ var taskStatusChangeHandler = function(event) {
         if (tasks[i].id === parseInt(taskId)) {
             tasks[i].status = statusValue;
         }
-        console.log(tasks);
     }
     saveTasks();
 };
@@ -198,5 +197,19 @@ pageContentEl.addEventListener("click", taskButtonHandler)
 var saveTasks = function() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
+var loadTasks = function() {
+   var savedTasks = localStorage.getItem("tasks");
+    if (!savedTasks) {
+        return false;
+    }
+    savedTasks = JSON.parse(savedTasks);
+
+    for (var i = 0; i < savedTasks.length; i++) {
+        createTaskEl(savedTasks[i]);
+    }
+    console.log(savedTasks);
+   
+}
 
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
+ loadTasks();
